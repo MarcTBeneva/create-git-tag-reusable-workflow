@@ -4,8 +4,8 @@ name: Github Actions Demo Increment Tag
 run-name: Increment tag of current repository
 on:
   push:
-  branches:
-    - main
+    branches:
+      - main
 jobs:
 
   increment-tag:
