@@ -1,0 +1,25 @@
+---
+
+name: Github Actions Demo Increment Tag
+run-name: Increment tag of current repository
+on:
+  push:
+  branches:
+    - main
+jobs:
+
+  increment-tag:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Bump release version
+        id: bump_version
+        uses: christian-draeger/increment-semantic-version@1.1.0
+        with:
+          current-version: ${{ secrets.SEMANTIC_VERSION }}
+          version-fragment: 'feature'
+      - name: Do something with your bumped release version
+        run: echo ${{ steps.bump_version.outputs.next-version }}
+
+
+...
