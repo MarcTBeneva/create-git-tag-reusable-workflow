@@ -16,7 +16,7 @@ jobs:
     steps:
 
       - name: affiche
-        run: echo ${{ github.event.pull_request.title }}
+        run: echo ${{ github.event.pull_request.body }}
 
       - name: Bump release version
         id: bump_version
