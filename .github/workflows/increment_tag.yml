@@ -27,6 +27,7 @@ jobs:
       - name: affiche
         run: echo ${{ steps.previoustag.outputs.tag }}
 
+
       - name: Bump release version
         id: bump_version
         uses: christian-draeger/increment-semantic-version@1.1.0
