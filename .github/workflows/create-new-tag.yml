@@ -1,0 +1,50 @@
+---
+
+name: create-new-tag.yml
+run-name: Create new tag for current repository
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - closed
+jobs:
+
+  create-new-tag:
+    if: github.event.pull_request.merged
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Pull repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Required due to the way Git works, without it this action won't be able to find any or the correct tags
+
+      - name: Get Previous tag of current repository
+        id: previous_tag_version
+        uses: WyriHaximus/github-action-get-previous-tag@v1
+        with:
+          fallback: 1.0.0
+
+      - name: Increment previous tag of current repository
+        id: next_tag_version
+        uses: christian-draeger/increment-semantic-version@1.1.0
+        with:
+          current-version: ${{ steps.previous_tag_version.outputs.tag }}
+          version-fragment: 'feature' ## Pour démo à changer.
+
+      - name: Create and push new tag
+        id: new_tag_version
+        uses: mathieudutour/github-tag-action@v6.1
+        with:
+          custom_tag: ${{ steps.next_tag_version.outputs.next-version }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create a GitHub release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ steps.new_tag_version.outputs.new_tag }}
+          name: Release ${{ steps.new_tag_version.outputs.new_tag }}
+          body: ${{ steps.new_tag_version.outputs.changelog }}
+
+...
