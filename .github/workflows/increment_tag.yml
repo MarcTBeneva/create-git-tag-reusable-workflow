@@ -15,15 +15,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Required due to the way Git works, without it this action won't be able to find any or the correct tags
+      - name: 'Get Previous tag'
+        id: previoustag
+        uses: "WyriHaximus/github-action-get-previous-tag@v1"
+        with:
+          fallback: 1.0.0
+
       - name: affiche
-        run: echo ${{ github.event.pull_request.body }}
+        run: echo ${{ steps.previoustag.outputs.tag }}
 
       - name: Bump release version
         id: bump_version
         uses: christian-draeger/increment-semantic-version@1.1.0
         with:
           current-version: ${{ secrets.SEMANTIC_VERSION }}
-          version-fragment: ${{ github.event.pull_request.label.name }}
+          version-fragment: ${{ github.event.pull_request.labels.*.name }}
       - name: Do something with your bumped release version
         run: echo ${{ steps.bump_version.outputs.next-version }}
 
