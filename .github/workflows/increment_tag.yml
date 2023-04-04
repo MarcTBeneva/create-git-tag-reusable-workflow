@@ -31,12 +31,16 @@ jobs:
           current-version: ${{ steps.previoustag.outputs.tag }}
           version-fragment: 'feature'
 
+
+
       - name: Create and push tag
         id: tag_version
         uses: mathieudutour/github-tag-action@v6.1
         with:
           custom_tag: ${{ steps.next_tag_version.outputs.next-version }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
+
+
 
       # - name: Create a GitHub release
       #   uses: ncipollo/release-action@v1
