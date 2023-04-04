@@ -38,6 +38,8 @@ jobs:
           custom_tag: ${{ steps.next_tag_version.outputs.next-version }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
+
+
       # - name: Create a GitHub release
       #   uses: ncipollo/release-action@v1
       #   with:
