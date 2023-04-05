@@ -1,6 +1,6 @@
 ---
 
-name: create-new-tag-common.yml
+name: create-git-tag-common.yml
 run-name: Create new tag for current repository
 on:
 
@@ -8,9 +8,9 @@ on:
 
 jobs:
 
-  create-new-tag-common:
+  create-git-tag-common:
     if: github.event.pull_request.merged
-    name: create-new-tag-common
+    name: create-git-tag-common
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
