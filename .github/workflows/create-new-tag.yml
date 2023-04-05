@@ -3,16 +3,16 @@
 name: create-new-tag.yml
 run-name: Create new tag for current repository
 on:
-  pull_request:
-    branches:
-      - main
-    types:
-      - closed
+
+  workflow_call:
+
 jobs:
 
   create-new-tag:
     if: github.event.pull_request.merged
+    name: create-new-tag
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
 
       - name: Pull repository
@@ -40,11 +40,11 @@ jobs:
           custom_tag: ${{ steps.next_tag_version.outputs.next-version }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Create a GitHub release
-        uses: ncipollo/release-action@v1
-        with:
-          tag: ${{ steps.new_tag_version.outputs.new_tag }}
-          name: Release ${{ steps.new_tag_version.outputs.new_tag }}
-          body: ${{ steps.new_tag_version.outputs.changelog }}
+      # - name: Create a GitHub release
+      #   uses: ncipollo/release-action@v1
+      #   with:
+      #     tag: ${{ steps.new_tag_version.outputs.new_tag }}
+      #     name: Release ${{ steps.new_tag_version.outputs.new_tag }}
+      #     body: ${{ steps.new_tag_version.outputs.changelog }}
 
 ...
