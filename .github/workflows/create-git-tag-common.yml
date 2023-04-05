@@ -1,6 +1,6 @@
 ---
 
-name: create-new-tag.yml
+name: create-new-tag-common.yml
 run-name: Create new tag for current repository
 on:
 
@@ -8,9 +8,9 @@ on:
 
 jobs:
 
-  create-new-tag:
+  create-new-tag-common:
     if: github.event.pull_request.merged
-    name: create-new-tag
+    name: create-new-tag-common
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -24,7 +24,7 @@ jobs:
         id: previous_tag_version
         uses: WyriHaximus/github-action-get-previous-tag@v1
         with:
-          fallback: 1.0.0
+          fallback: 0.0.0
 
       - name: Increment previous tag of current repository
         id: next_tag_version
