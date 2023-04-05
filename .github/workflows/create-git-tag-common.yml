@@ -24,14 +24,14 @@ jobs:
         id: previous_tag_version
         uses: WyriHaximus/github-action-get-previous-tag@v1
         with:
-          fallback: 0.0.0
+          fallback: 0.0.0  # Si aucun tag n'existe dans le repo.
 
       - name: Increment previous tag of current repository
         id: next_tag_version
         uses: christian-draeger/increment-semantic-version@1.1.0
         with:
           current-version: ${{ steps.previous_tag_version.outputs.tag }}
-          version-fragment: 'major' ## Pour démo à changer.
+          version-fragment: 'major' ## Pour démo à changer. (On pourrait peut-être utiliser les size-label à JF ???)
 
       - name: Create and push new tag
         id: new_tag_version
