@@ -16,3 +16,5 @@ jobs:
       - uses: google-github-actions/release-please-action@v3
         with:
           skip-github-release: true
+          release-type: simple
+          package-name: release-please-action
